@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+   <ion-list>
+    <!-- <ion-list-header>Follow us on Twitter</ion-list-header> -->
+
+    <div class="img image-upload">
+      <label for="camera-upload" class="img" style="overflow:hidden;width: 100px;height: 100px;">
+        <img src="{{this.profile?.avatar}}" style="height: 100%">
+      </label>
+      <input id="camera-upload" type="file" accept="image/*" ng2FileSelect [uploader]="uploader">
+    </div>
+
+    <ion-item>
+      <ion-icon name="ionic" item-start></ion-icon>
+      Lastname:
+      {{this.profile?.lastname}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="ionic" item-start></ion-icon>
+      Firstname:
+      {{this.profile?.firstname}}
+    </ion-item>
+    <ion-item>
+      <ion-icon name="ionic" item-start></ion-icon>
+      Borndate:
+      {{this.profile?.borndate}}
+    </ion-item>
+  </ion-list>
+</ion-content>

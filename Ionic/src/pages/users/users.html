@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Groups & Users</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <button ion-item (click)="goToNotificationPage()" detail-none>
+    Notifications
+  </button>
+
+  <ion-list class="accordion-list">
+    <ion-list-header no-lines no-padding>
+      <button ion-item (click)="clickOpenCloseOwnedGroups()" detail-none
+        [ngClass]="{'section-active':openOwnedGroups,'section':!openOwnedGroups}">
+        <ion-icon item-left name="arrow-forward" *ngIf="!openOwnedGroups"></ion-icon>
+        <ion-icon item-left name="arrow-down" *ngIf="openOwnedGroups"></ion-icon>
+        Owned Groups
+      </button>
+      <ion-list *ngIf="openOwnedGroups" style="margin-left: 10px" no-lines>
+        <ion-list-header *ngFor="let ownedGroup of ownedGroups" no-lines no-padding>
+          <button ion-item (click)="clickOpenCloseGroupContent(ownedGroup)" detail-none
+            [ngClass]="{'section-active':ownedGroup.open,'section':!ownedGroup.open}">
+            <ion-icon item-left name="arrow-forward" *ngIf="!ownedGroup.open"></ion-icon>
+            <ion-icon item-left name="arrow-down" *ngIf="ownedGroup.open"></ion-icon>
+            {{ownedGroup?.name}}
+          </button>
+          <ion-list *ngIf="ownedGroup.open" no-lines>
+            <ion-list-header>
+              <button ion-item *ngFor="let user of ownedGroup?.users" (click)='joinChat(user.lastname+" " +user.firstname,this.uID+ownedGroup._id+user._id)'>
+                <div class="container">
+                  <div class="row no-gutter">
+                    <div class="col-">
+                      <img src="{{user.avatar}}" width="32" height="32">
+                    </div>
+                    <div class="col-" style="margin-left: 20px">
+                      <div class="row">
+                        <div class="col-" style="font-size: 80%">
+                          {{user.lastname}}
+                          {{user.firstname}}
+                        </div>
+                      </div>
+                      <div class="row col-" style="font-size: 80%">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Green_circle.png" width="10"
+                          height="10">
+                        &nbsp;Available
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </ion-list-header>
+          </ion-list>
+        </ion-list-header>
+      </ion-list>
+    </ion-list-header>
+    <ion-list *ngIf="openOwnedGroups && (!ownedGroups?.length > 0)" style="margin-left: 10px" no-lines>
+        <div>You are not in a grup.</div>
+      </ion-list>
+  </ion-list>
+
+  <ion-list class="accordion-list">
+    <ion-list-header no-lines no-padding>
+      <button ion-item (click)="clickOpenCloseEnteredGroups()" detail-none
+        [ngClass]="{'section-active':openEnteredGroups,'section':!openEnteredGroups}">
+        <ion-icon item-left name="arrow-forward" *ngIf="!openEnteredGroups"></ion-icon>
+        <ion-icon item-left name="arrow-down" *ngIf="openEnteredGroups"></ion-icon>
+        Entered Groups
+      </button>
+      <ion-list *ngIf="openEnteredGroups && enteredGroups?.length > 0" style="margin-left: 10px" no-lines>
+        <ion-list-header *ngFor="let entGroup of enteredGroups" no-lines no-padding>
+          <button ion-item (click)="clickOpenCloseGroupContent(entGroup)" detail-none
+            [ngClass]="{'section-active':entGroup.open,'section':!entGroup.open}">
+            <ion-icon item-left name="arrow-forward" *ngIf="!entGroup.open"></ion-icon>
+            <ion-icon item-left name="arrow-down" *ngIf="entGroup.open"></ion-icon>
+            {{entGroup?.name}}
+          </button>
+          <ion-list *ngIf="entGroup.open" no-lines>
+            <ion-list-header>
+              <button ion-item (click)='joinChat(entGroup.author_id.lastname+" " +entGroup.author_id.firstname,entGroup.author_id._id+entGroup._id+this.uID)'>
+                <div class="container">
+                  <div class="row no-gutter">
+                    <div class="col-">
+                      <img src="{{entGroup.author_id.avatar}}" width="32" height="32">
+                    </div>
+                    <div class="col-" style="margin-left: 20px">
+                      <div class="row">
+                        <div class="col-" style="font-size: 80%">
+                          {{entGroup.author_id.lastname}}
+                          {{entGroup.author_id.firstname}}
+                        </div>
+                      </div>
+                      <div class="row col-" style="font-size: 80%">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Green_circle.png" width="10"
+                          height="10">
+                        &nbsp;Available
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </ion-list-header>
+          </ion-list>
+        </ion-list-header>
+      </ion-list>
+
+      <ion-list *ngIf="openEnteredGroups && (!enteredGroups?.length > 0)" style="margin-left: 10px" no-lines>
+        <div>You are not in a grup.</div>
+      </ion-list>
+
+    </ion-list-header>
+  </ion-list>
+  <input type="text" [(ngModel)] = "lastname" />
+  <button ion-button full (click)="setUID()" [disabled]="nickname === ''">UpdateProfile as {{ uID }}</button>
+</ion-content>

@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Join Chat
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <agm-map [latitude]="lat" [longitude]="lng" [zoom]="15">
+        <agm-marker [latitude]="lat" [longitude]="lng" [label]="'Alex'">
+          </agm-marker>
+    </agm-map>
+  {{"Latitude: " + this.lat + "   Longitude:" + this.lng+ "   Speed: " + this.speed}}
+</ion-content>
